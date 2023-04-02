@@ -5,6 +5,8 @@ VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hex.Bot.API", "Hex.Bot.API.csproj", "{9DB5BB75-4212-4B1D-B42E-3B299D92F065}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hex.Bot.Web", "..\Hex.Bot.Web\Hex.Bot.Web.csproj", "{49969335-E1A4-46E5-8BF1-960BF96E962B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,12 @@ Global
 		{9DB5BB75-4212-4B1D-B42E-3B299D92F065}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DB5BB75-4212-4B1D-B42E-3B299D92F065}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DB5BB75-4212-4B1D-B42E-3B299D92F065}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49969335-E1A4-46E5-8BF1-960BF96E962B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49969335-E1A4-46E5-8BF1-960BF96E962B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49969335-E1A4-46E5-8BF1-960BF96E962B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{49969335-E1A4-46E5-8BF1-960BF96E962B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49969335-E1A4-46E5-8BF1-960BF96E962B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49969335-E1A4-46E5-8BF1-960BF96E962B}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
