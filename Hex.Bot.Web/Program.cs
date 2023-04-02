@@ -28,7 +28,7 @@ builder.Services.AddSingleton<IBotFrameworkHttpAdapter>(sp => sp.GetService<Clou
 builder.Services.AddSingleton<BotAdapter>(sp => sp.GetService<CloudAdapter>());
 
 // Create command handlers and the Conversation with command-response feature enabled.
-builder.Services.AddSingleton<HelloWorldCommandHandler>();
+builder.Services.AddSingleton<TimmyBotCommandHandler>();
 builder.Services.AddSingleton(sp =>
 {
     var options = new ConversationOptions()
@@ -37,7 +37,7 @@ builder.Services.AddSingleton(sp =>
         
         Command = new CommandOptions()
         {
-            Commands = new List<ITeamsCommandHandler> { sp.GetService<HelloWorldCommandHandler>() }
+            Commands = new List<ITeamsCommandHandler> { sp.GetService<TimmyBotCommandHandler>() }
         }
     };
 

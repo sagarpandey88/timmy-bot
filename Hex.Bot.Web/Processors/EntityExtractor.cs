@@ -2,7 +2,11 @@
 using Azure.AI.Language.Conversations;
 using Azure.AI.TextAnalytics;
 using Azure.Core;
+using Hex.Bot.Web.Helpers;
+using Hex.Bot.Web.Models;
 using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
+using Microsoft.SharePoint.Client;
+using Newtonsoft.Json;
 using System.Text.Json;
 
 namespace Hex.Bot.Web.Processors
@@ -22,7 +26,7 @@ namespace Hex.Bot.Web.Processors
 
         }
 
-        public string Extract(string text)
+        public IActionableEntity Extract(string userText)
         {
             AzureKeyCredential credentials = new AzureKeyCredential(AzureKey);
             Uri endpoint = new Uri(LanguageCognitiveServicesEndPoint);
@@ -30,6 +34,11 @@ namespace Hex.Bot.Web.Processors
             //var response = client.RecognizeEntities(text);
             //CategorizedEntity categorizedEntity = response.Value.First();
             //return categorizedEntity.Category.ToString();
+
+            if (userText.Length > 200)
+            {
+                return new SummarizeAction { Summary = TextSummarizer.SummarizeText(userText.Split(":")[1], Configuration).Result, ActionType = ActionType.Summarize };
+            }
 
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credentials);
 
@@ -42,7 +51,7 @@ namespace Hex.Bot.Web.Processors
                 {
                     conversationItem = new
                     {
-                        text = text,
+                        text = userText,
                         id = "1",
                         participantId = "1",
                     }
@@ -66,15 +75,40 @@ namespace Hex.Bot.Web.Processors
             JsonElement intents = conversationPrediction.GetProperty("intents");
             JsonElement entities = conversationPrediction.GetProperty("entities");
 
-            // if(entities.)
+            List<EntityItem> entityList = JsonConvert.DeserializeObject<List<EntityItem>>(entities.ToString());
+
+            EntityItem et = entityList.Where(x => x.category == "Action").First();
+            switch (et.text.ToLower())
+            {
+                case "upload":
+                case "push":
+
+                    EntityItem docLibe = entityList.Where(x => x.category == "DocumentLibrary").FirstOrDefault();
+                    return new UploadDocAction { DocumentLibraryName = docLibe.text, ActionType = ActionType.UploadDoc };
 
 
-            //foreach (var entity in response.Value)
-            //{
-            //    Console.WriteLine($"\tText: {entity.Text}\tCategory: {entity.Category}\tSub-Category: {entity.SubCategory}");
-            //    Console.WriteLine($"\t\tScore: {entity.ConfidenceScore:F2}\tLength: {entity.Length}\tOffset: {entity.Offset}\n");
-            //}
-            return "";
+                case "get":
+                case "search":
+                case "find":
+                    EntityItem fileName = entityList.Where(x => x.category == "FileName").FirstOrDefault();
+                    return new GetDocAction { FileName = fileName.text, ActionType = ActionType.GetDoc };
+                case "summarize":
+                    return new SummarizeAction { Summary = TextSummarizer.SummarizeText(userText, Configuration).Result, ActionType = ActionType.Summarize };
+
+            }
+
+            return new IActionableEntity();
+
+
+
         }
+    }
+
+    public class EntityItem
+    {
+        public string category { get; set; }
+        public string text { get; set; }
+
+
     }
 }
