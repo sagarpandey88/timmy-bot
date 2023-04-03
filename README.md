@@ -11,6 +11,9 @@ Skills as of Apr 2023
 ## Upload a document
 ![image](https://user-images.githubusercontent.com/30863296/229411791-eaaa81d3-b599-4356-a7b3-bff67e673064.png)
 
+![image](https://user-images.githubusercontent.com/30863296/229415673-c750c9ec-4b94-4453-9f42-6fb6feb25506.png)
+
+
 ## Search for a document
 ![image](https://user-images.githubusercontent.com/30863296/229411896-aafb8392-44e0-49a3-9ff1-a13b3eeb4362.png)
 
